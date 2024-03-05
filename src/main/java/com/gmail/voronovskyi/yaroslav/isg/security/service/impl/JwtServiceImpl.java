@@ -1,6 +1,7 @@
 package com.gmail.voronovskyi.yaroslav.isg.security.service.impl;
 
 import com.gmail.voronovskyi.yaroslav.isg.security.service.JwtService;
+import com.gmail.voronovskyi.yaroslav.isg.security.util.Constants;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -45,7 +46,8 @@ public class JwtServiceImpl implements JwtService {
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() +
+                        Constants.COUNT_MILLISECONDS * Constants.COUNT_MINUTES * Constants.COUNT_HOURS))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 

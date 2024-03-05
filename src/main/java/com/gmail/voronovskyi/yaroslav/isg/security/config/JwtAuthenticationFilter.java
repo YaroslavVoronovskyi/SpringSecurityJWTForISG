@@ -2,13 +2,13 @@ package com.gmail.voronovskyi.yaroslav.isg.security.config;
 
 import com.gmail.voronovskyi.yaroslav.isg.security.service.JwtService;
 import com.gmail.voronovskyi.yaroslav.isg.security.service.UserService;
+import com.gmail.voronovskyi.yaroslav.isg.security.util.Constants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,14 +31,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response, @NonNull FilterChain filterChain)
             throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader(Constants.FILTER_CONFIG_HEADER);
         final String jwt;
         final String userEmail;
-        if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
+        if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, Constants.FILTER_CONFIG_PREFIX)) {
             filterChain.doFilter(request, response);
             return;
         }
-        jwt = authHeader.substring(7);
+        jwt = authHeader.substring(Constants.JWT_BEGIN_INDEX);
         userEmail = jwtService.extractUserName(jwt);
         if (StringUtils.isNotEmpty(userEmail)
                 && SecurityContextHolder.getContext().getAuthentication() == null) {

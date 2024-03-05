@@ -1,8 +1,8 @@
 package com.gmail.voronovskyi.yaroslav.isg.security.controller;
 
-import com.gmail.voronovskyi.yaroslav.isg.security.dao.request.SignInRequest;
-import com.gmail.voronovskyi.yaroslav.isg.security.dao.request.SignUpRequest;
-import com.gmail.voronovskyi.yaroslav.isg.security.dao.response.JwtAuthenticationResponse;
+import com.gmail.voronovskyi.yaroslav.isg.security.dto.request.SignInRequest;
+import com.gmail.voronovskyi.yaroslav.isg.security.dto.request.SignUpRequest;
+import com.gmail.voronovskyi.yaroslav.isg.security.dto.response.JwtAuthenticationResponse;
 import com.gmail.voronovskyi.yaroslav.isg.security.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

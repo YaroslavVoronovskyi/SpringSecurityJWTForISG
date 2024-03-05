@@ -1,13 +1,14 @@
 package com.gmail.voronovskyi.yaroslav.isg.security.service.impl;
 
-import com.gmail.voronovskyi.yaroslav.isg.security.dao.request.SignInRequest;
-import com.gmail.voronovskyi.yaroslav.isg.security.dao.request.SignUpRequest;
-import com.gmail.voronovskyi.yaroslav.isg.security.dao.response.JwtAuthenticationResponse;
+import com.gmail.voronovskyi.yaroslav.isg.security.dto.request.SignInRequest;
+import com.gmail.voronovskyi.yaroslav.isg.security.dto.request.SignUpRequest;
+import com.gmail.voronovskyi.yaroslav.isg.security.dto.response.JwtAuthenticationResponse;
 import com.gmail.voronovskyi.yaroslav.isg.security.model.Role;
 import com.gmail.voronovskyi.yaroslav.isg.security.model.User;
 import com.gmail.voronovskyi.yaroslav.isg.security.repository.UserRepository;
 import com.gmail.voronovskyi.yaroslav.isg.security.service.AuthenticationService;
 import com.gmail.voronovskyi.yaroslav.isg.security.service.JwtService;
+import com.gmail.voronovskyi.yaroslav.isg.security.util.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,7 +43,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+                .orElseThrow(() -> new IllegalArgumentException(Constants.INVALID_DATA_MESSAGE));
         var jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }

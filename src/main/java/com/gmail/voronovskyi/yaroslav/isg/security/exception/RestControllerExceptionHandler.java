@@ -1,26 +1,28 @@
 package com.gmail.voronovskyi.yaroslav.isg.security.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
+@ControllerAdvice(annotations = RestController.class)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class RestControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers,
-                                                                  HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         List<String> errors = ex.getBindingResult().getFieldErrors().stream()
                 .map(x -> x.getField() + " " + x.getDefaultMessage())
-                .collect(Collectors.toList());
+                .toList();
         ApiError apiError = ApiError.builder()
                 .error(HttpStatus.BAD_REQUEST.value())
                 .status(HttpStatus.BAD_REQUEST)

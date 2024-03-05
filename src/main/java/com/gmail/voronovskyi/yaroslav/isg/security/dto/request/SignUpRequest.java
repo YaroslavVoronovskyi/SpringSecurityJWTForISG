@@ -1,12 +1,14 @@
-package com.gmail.voronovskyi.yaroslav.isg.security.dao.request;
+package com.gmail.voronovskyi.yaroslav.isg.security.dto.request;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Data
-@Builder
+@Getter
+@Setter
+@Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class SignUpRequest {

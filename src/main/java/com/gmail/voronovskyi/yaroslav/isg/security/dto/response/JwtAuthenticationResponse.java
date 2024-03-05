@@ -1,11 +1,13 @@
-package com.gmail.voronovskyi.yaroslav.isg.security.dao.response;
+package com.gmail.voronovskyi.yaroslav.isg.security.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
